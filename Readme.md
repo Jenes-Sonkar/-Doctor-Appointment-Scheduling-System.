@@ -35,7 +35,7 @@ src/
 
 ### 1️⃣ Clone Repository
 ```bash
-git clone https://github.com/<your-username>/doctor-appointment-backend.git
+git clone https://github.com/Jenes-Sonkar/Advanced_Backend
 cd doctor-appointment-backend
 
 2️⃣ Install Dependencies
@@ -49,7 +49,7 @@ PORT=8000
 MONGODB_URL=mongodb+srv://<user>:<password>@cluster0.mongodb.net
 DB_NAME=advanced_backend
 CORS_ORIGIN=*
-N8N_WEBHOOK_URL=https://jenes29.app.n8n.cloud/webhook/<your-production-webhook-id>
+N8N_WEBHOOK_URL=https://jenes29.app.n8n.cloud/webhook/book-appointment
 
 
 ⚠️ Use the production URL from n8n (not the test one).
