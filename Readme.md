@@ -1,21 +1,21 @@
-# 🩺 Doctor Appointment Scheduling System
+# Doctor Appointment Scheduling System
 
 A complete backend solution for managing doctor appointments with real-time availability validation, timezone awareness, and automatic Google Calendar event creation using **n8n workflow automation**.
 
 ---
 
-## 🚀 Features
+## Features
 
-- 🧠 Smart appointment scheduling (no double-booking)
-- 🌍 Timezone-aware scheduling (Luxon)
-- 🧾 MongoDB persistence for doctors, patients, and appointments
-- 🔔 Real-time automation via **n8n webhooks**
-- 📅 Automatic Google Calendar event creation
-- ⚙️ Modular MVC architecture — production-ready
+- Smart appointment scheduling with overlap prevention
+- Timezone-aware scheduling using Luxon
+- MongoDB persistence for doctors, patients, and appointments
+- Real-time automation through n8n webhooks
+- Automatic Google Calendar event creation
+- Modular and production-ready MVC architecture
 
 ---
 
-## 🏗️ Folder Structure
+## Folder Structure
 
 src/
 ├── app.js # Express setup
@@ -28,70 +28,72 @@ src/
 ├── utils/ # Helper functions
 └── scripts/seedDoctors.js # Doctor & availability seeder
 
+yaml
+Copy code
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
-### 1️⃣ Clone Repository
+### 1. Clone Repository
 ```bash
 git clone https://github.com/Jenes-Sonkar/Advanced_Backend
 cd doctor-appointment-backend
-
-2️⃣ Install Dependencies
+2. Install Dependencies
+bash
+Copy code
 npm install
+3. Configure Environment Variables
+Create a .env file in the project root and add the following:
 
-3️⃣ Configure Environment Variables
-
-Create a .env file in the project root and paste:
-
+env
+Copy code
 PORT=8000
 MONGODB_URL=mongodb+srv://<user>:<password>@cluster0.mongodb.net
 DB_NAME=advanced_backend
 CORS_ORIGIN=*
 N8N_WEBHOOK_URL=https://jenes29.app.n8n.cloud/webhook/book-appointment
+Use the production URL from n8n (not the test one).
 
-
-⚠️ Use the production URL from n8n (not the test one).
-
-🧠 Database Seeding
-
+Database Seeding
 Run the seed script to create a doctor and availability:
 
+bash
+Copy code
 node -r dotenv/config src/scripts/seedDoctors.js
+Example Output:
 
-
-✅ Example Output:
-
+arduino
+Copy code
 MongoDB connected: cluster0.mp0johc.mongodb.net
 Seeded doctor and availability. doctorId= 68e9f7aa687fa23e27dc4f73
+Copy the doctorId displayed in the output. You will use it when testing with Postman.
 
-
-📋 Copy the doctorId shown — you’ll need it for Postman testing.
-
-▶️ Start the Server
+Start the Server
+bash
+Copy code
 npm run dev
+Expected Log:
 
-
-✅ Expected Log:
-
+arduino
+Copy code
 MongoDB connected: cluster0.mp0johc.mongodb.net
 Server is running on port 8000
+API Testing (Postman)
+Endpoint
 
-🧪 API Testing (Postman)
-
-Endpoint:
-
+bash
+Copy code
 POST http://localhost:8000/api/appointments/request
+Headers
 
-
-Headers:
-
+pgsql
+Copy code
 Content-Type: application/json
+Body
 
-
-Body:
-
+json
+Copy code
 {
   "doctorId": "68e9f7aa687fa23e27dc4f73",
   "patient": {
@@ -103,10 +105,10 @@ Body:
   "end": "2025-10-12T11:30:00",
   "timezone": "Asia/Kolkata"
 }
+Expected Response
 
-
-✅ Expected Response:
-
+json
+Copy code
 {
   "appointment": {
     "id": "6701234567890abcdef1234",
@@ -117,11 +119,9 @@ Body:
     "timezone": "Asia/Kolkata"
   }
 }
-
-🤖 n8n + Google Calendar Integration
+n8n and Google Calendar Integration
 Step 1 — Create Workflow in n8n
-
-Go to https://jenes29.app.n8n.cloud
+Log in to https://jenes29.app.n8n.cloud
 
 Add a Webhook Node
 
@@ -129,7 +129,7 @@ Method: POST
 
 Copy the Production URL
 
-Paste it in .env → N8N_WEBHOOK_URL
+Paste it in .env as N8N_WEBHOOK_URL
 
 Add a Google Calendar Node
 
@@ -137,9 +137,9 @@ Operation: Create an Event
 
 Connect your Google Account
 
-Select your main calendar
+Select your primary calendar
 
-Set fields:
+Set fields as follows:
 
 Field	Expression
 Start Date & Time	{{$json["appointment"]["start"]}}
@@ -150,22 +150,24 @@ Timezone	{{$json["appointment"]["doctor"]["timezone"]}}
 
 Connect the nodes:
 
+css
+Copy code
 [ Webhook ] → [ Google Calendar ]
+Save and execute the workflow.
 
+Send the Postman request again. Both nodes should show successful execution, and the event will appear in Google Calendar.
 
-Click Save → Execute Workflow.
+Google Calendar Result
+Example Event:
 
-Send the Postman request again — both nodes will show ✅, and the event appears in Google Calendar.
-
-📅 Google Calendar Result
-
-Event Example:
-
+vbnet
+Copy code
 Title: Appointment with Umar Farook
 Time: 11:00 – 11:30 AM
 Description: Doctor: Dr. Jones
-
-🧩 Webhook Payload Example
+Webhook Payload Example
+json
+Copy code
 {
   "event": "appointment_confirmed",
   "appointment": {
@@ -175,54 +177,38 @@ Description: Doctor: Dr. Jones
     "end": "2025-10-12T11:30:00+05:30"
   }
 }
+Troubleshooting
+Issue	Cause	Solution
+Doctor not found	Invalid or expired doctorId	Re-run seedDoctors.js and use the new ID
+Requested slot outside availability	Time outside doctor's working hours (9 AM–5 PM)	Use a valid time range
+n8n webhook failed: 404	Incorrect webhook URL	Replace with the correct production URL
+No Google Calendar event	Node not mapped or account not connected	Reconnect and re-map fields
 
-🧰 Troubleshooting
-Issue	Cause	Fix
-"Doctor not found"	Wrong or expired doctorId	Re-run seedDoctors.js and use new ID
-"Requested slot outside availability"	Time outside doctor’s hours (9 AM–5 PM)	Use valid range
-"n8n webhook failed: 404"	Incorrect webhook URL	Replace with Production URL
-No Google Calendar event	Calendar node not mapped or account not connected	Reconnect & re-map fields
-🧾 Tech Stack
+Tech Stack
 Category	Technologies
 Backend	Node.js, Express.js
 Database	MongoDB (Mongoose)
 Utilities	Luxon, dotenv, axios
 Automation	n8n (Webhook + Google Calendar)
 Design Pattern	MVC (Clean Architecture)
-👨‍💻 Author
 
-Umar Farook
+Author
+Jenes Sonkar
 Backend Developer | IIIT Sonepat
-📧 jenessonkar@example.com
+Email: jenessonkar@example.com
 
-🪪 License
+License
+Licensed under the MIT License. You are free to use, modify, and distribute this project.
 
-Licensed under the MIT License — free to use, modify, and distribute.
-
-🏁 Summary
-
+Summary
 This project demonstrates:
 
-⚙️ Backend API design (Express + MongoDB)
+REST API design and backend architecture using Node.js and Express.js
 
-🌐 Real-time workflow automation (n8n)
+Database modeling and validation using MongoDB
 
-📅 External service integration (Google Calendar)
+Workflow automation and third-party integration via n8n
 
-🧩 End-to-end event-driven system
+Real-time synchronization with Google Calendar
 
-🚀 Ready for deployment and scaling
-
-
----
-
-✅ **Now you’re ready to:**
-1. Paste this code into your `README.md` file.  
-2. Commit & push it:
-   ```bash
-   git add README.md
-   git commit -m "Added final project README"
-   git push origin main
-
-
-Test one last time (Postman → n8n → Google Calendar).
+End-to-end event-driven backend system ready for deployment
