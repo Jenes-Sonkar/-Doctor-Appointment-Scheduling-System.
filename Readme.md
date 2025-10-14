@@ -122,22 +122,22 @@ Step 1 — Create Workflow in n8n
 Log in to https://jenes29.app.n8n.cloud
 ```
 
-Add a Webhook Node
-Method: POST
+Step 2  —  Add a Webhook Node
+- Method: POST
 
-Copy the Production URL
+- Copy the Production URL
 
-Paste it in .env as N8N_WEBHOOK_URL
+- Paste it in .env as N8N_WEBHOOK_URL
 
-Add a Google Calendar Node
+- Add a Google Calendar Node
 
-Operation: Create an Event
+- Operation: Create an Event
 
-Connect your Google Account
+- Connect your Google Account
 
-Select your primary calendar
+- Select your primary calendar
 
-Set fields as follows:
+- Set fields as follows:
 
 Field	Expression
 ```
@@ -147,12 +147,11 @@ Summary	Appointment with {{$json["appointment"]["patient"]["name"]}}
 Description	Doctor: {{$json["appointment"]["doctor"]["name"]}}
 Timezone	{{$json["appointment"]["doctor"]["timezone"]}}
 ```
-Connect the nodes:
+Step 3  — Connect the nodes:
 
-[ Webhook ] → [ Google Calendar ]
-Save and execute the workflow.
-
-Send the Postman request again. Both nodes should show successful execution, and the event will appear in Google Calendar.
+- [ Webhook ] → [ Google Calendar ]
+- Save and execute the workflow.
+- Send the Postman request again. Both nodes should show successful execution, and the event will appear in Google Calendar.
 
 Google Calendar Result
 Example Event:
@@ -175,10 +174,10 @@ Webhook Payload Example
 ```
 Troubleshooting
 Issue	Cause	Solution
-Doctor not found	Invalid or expired doctorId	Re-run seedDoctors.js and use the new ID
-Requested slot outside availability	Time outside doctor's working hours (9 AM–5 PM)	Use a valid time range
-n8n webhook failed: 404	Incorrect webhook URL	Replace with the correct production URL
-No Google Calendar event	Node not mapped or account not connected	Reconnect and re-map fields
+- Doctor not found	Invalid or expired doctorId	Re-run seedDoctors.js and use the new ID
+- Requested slot outside availability	Time outside doctor's working hours (9 AM–5 PM)	Use a valid time range
+- n8n webhook failed: 404	Incorrect webhook URL	Replace with the correct production URL
+- No Google Calendar event	Node not mapped or account not connected	Reconnect and re-map fields
 
 Tech Stack
 ```
@@ -193,14 +192,14 @@ Design Pattern	MVC (Clean Architecture)
 
 
 Summary
-This project demonstrates:
+- This project demonstrates:
 
-REST API design and backend architecture using Node.js and Express.js
+- REST API design and backend architecture using Node.js and Express.js
 
-Database modeling and validation using MongoDB
+- Database modeling and validation using MongoDB
 
-Workflow automation and third-party integration via n8n
+- Workflow automation and third-party integration via n8n
 
-Real-time synchronization with Google Calendar
+- Real-time synchronization with Google Calendar
 
-End-to-end event-driven backend system ready for deployment
+- End-to-end event-driven backend system ready for deployment
