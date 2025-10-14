@@ -16,7 +16,7 @@ A complete backend solution for managing doctor appointments with real-time avai
 ---
 
 ## Folder Structure
-
+```
 src/
 ├── app.js # Express setup
 ├── index.js # Server entry point
@@ -27,14 +27,14 @@ src/
 ├── middlewares/ # Auth / error handlers
 ├── utils/ # Helper functions
 └── scripts/seedDoctors.js # Doctor & availability seeder
-
+```
 
 ---
 
 ## Installation & Setup
 
 ### 1. Clone Repository
-```bash
+
 git clone https://github.com/Jenes-Sonkar/Advanced_Backend
 cd doctor-appointment-backend
 2. Install Dependencies
