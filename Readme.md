@@ -14,6 +14,18 @@ A complete backend solution for managing doctor appointments with real-time avai
 - Modular and production-ready MVC architecture
 
 ---
+ # Tech Stack
+```
+Category	Technologies
+Backend	Node.js, Express.js
+Database	MongoDB (Mongoose)
+Utilities	Luxon, dotenv, axios
+Automation	n8n (Webhook + Google Calendar)
+Design Pattern	MVC (Clean Architecture)
+
+```
+
+---
 
 ## Folder Structure
 ```
@@ -179,19 +191,10 @@ Issue	Cause	Solution
 - n8n webhook failed: 404	Incorrect webhook URL	Replace with the correct production URL
 - No Google Calendar event	Node not mapped or account not connected	Reconnect and re-map fields
 
-Tech Stack
-```
-Category	Technologies
-Backend	Node.js, Express.js
-Database	MongoDB (Mongoose)
-Utilities	Luxon, dotenv, axios
-Automation	n8n (Webhook + Google Calendar)
-Design Pattern	MVC (Clean Architecture)
-
-```
 
 
-Summary
+
+## Summary
 - This project demonstrates:
 
 - REST API design and backend architecture using Node.js and Express.js
