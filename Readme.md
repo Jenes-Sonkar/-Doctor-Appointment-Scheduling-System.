@@ -28,8 +28,6 @@ src/
 ├── utils/ # Helper functions
 └── scripts/seedDoctors.js # Doctor & availability seeder
 
-yaml
-Copy code
 
 ---
 
@@ -40,14 +38,11 @@ Copy code
 git clone https://github.com/Jenes-Sonkar/Advanced_Backend
 cd doctor-appointment-backend
 2. Install Dependencies
-bash
-Copy code
 npm install
 3. Configure Environment Variables
 Create a .env file in the project root and add the following:
 
 env
-Copy code
 PORT=8000
 MONGODB_URL=mongodb+srv://<user>:<password>@cluster0.mongodb.net
 DB_NAME=advanced_backend
@@ -57,43 +52,30 @@ Use the production URL from n8n (not the test one).
 
 Database Seeding
 Run the seed script to create a doctor and availability:
-
-bash
-Copy code
 node -r dotenv/config src/scripts/seedDoctors.js
-Example Output:
 
-arduino
-Copy code
+Example Output:
 MongoDB connected: cluster0.mp0johc.mongodb.net
 Seeded doctor and availability. doctorId= 68e9f7aa687fa23e27dc4f73
 Copy the doctorId displayed in the output. You will use it when testing with Postman.
 
 Start the Server
-bash
-Copy code
 npm run dev
-Expected Log:
 
-arduino
-Copy code
+Expected Log:
 MongoDB connected: cluster0.mp0johc.mongodb.net
 Server is running on port 8000
 API Testing (Postman)
 Endpoint
 
-bash
-Copy code
 POST http://localhost:8000/api/appointments/request
 Headers
 
-pgsql
-Copy code
 Content-Type: application/json
 Body
 
 json
-Copy code
+
 {
   "doctorId": "68e9f7aa687fa23e27dc4f73",
   "patient": {
@@ -105,10 +87,12 @@ Copy code
   "end": "2025-10-12T11:30:00",
   "timezone": "Asia/Kolkata"
 }
+
+
 Expected Response
 
 json
-Copy code
+
 {
   "appointment": {
     "id": "6701234567890abcdef1234",
@@ -119,6 +103,8 @@ Copy code
     "timezone": "Asia/Kolkata"
   }
 }
+
+
 n8n and Google Calendar Integration
 Step 1 — Create Workflow in n8n
 Log in to https://jenes29.app.n8n.cloud
@@ -150,8 +136,6 @@ Timezone	{{$json["appointment"]["doctor"]["timezone"]}}
 
 Connect the nodes:
 
-css
-Copy code
 [ Webhook ] → [ Google Calendar ]
 Save and execute the workflow.
 
@@ -160,14 +144,11 @@ Send the Postman request again. Both nodes should show successful execution, and
 Google Calendar Result
 Example Event:
 
-vbnet
-Copy code
 Title: Appointment with Umar Farook
 Time: 11:00 – 11:30 AM
 Description: Doctor: Dr. Jones
 Webhook Payload Example
-json
-Copy code
+
 {
   "event": "appointment_confirmed",
   "appointment": {
