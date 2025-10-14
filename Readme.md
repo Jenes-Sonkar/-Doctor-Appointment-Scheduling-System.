@@ -14,7 +14,7 @@ A complete backend solution for managing doctor appointments with real-time avai
 - Modular and production-ready MVC architecture
 
 ---
- # Tech Stack
+ ## Tech Stack
 ```
 Category	Technologies
 Backend	Node.js, Express.js
