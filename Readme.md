@@ -15,7 +15,7 @@ A complete backend solution for managing doctor appointments with real-time avai
 
 ---
  ## Tech Stack
-```
+
 Category	Technologies
 Backend	Node.js, Express.js
 Database	MongoDB (Mongoose)
