@@ -23,7 +23,6 @@ Utilities	Luxon, dotenv, axios
 Automation	n8n (Webhook + Google Calendar)
 Design Pattern	MVC (Clean Architecture)
 
-```
 
 ---
 
